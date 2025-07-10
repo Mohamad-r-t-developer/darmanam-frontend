@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --green-primary-0:#E5F7E4;
+    --green-primary-1: #d4f4d1;
+    --green-primary-2: #c0ebbc;
+    --green-primary-3: #abe3a6;
+    --green-primary-4: #97db91;
+    --green-primary-5: #6fca67;
+    --green-primary-6: #46ba3c;
+    --green-primary-7: #1ea912;
+    --green-primary-8: #18870e;
+    --green-primary-9: #12650b;
+    --green-primary-10: #0c4407;
+    --green-primary-11: #093305;
+    --green-primary-12: #062204;
+    --green-primary-13: #031102;
+    /*  */
+    --red-primary-0: #f9ebe8;
+    --red-primary-1: #f4d6d2;
+    --red-primary-2: #eec2bb;
+    --red-primary-3: #e9ada4;
+    --red-primary-4: #dd8577;
+    --red-primary-5: #d25c49;
+    --red-primary-6: #c7331c;
+    --red-primary-7: #9f2916;
+    --red-primary-8: #771f11;
+    --red-primary-9: #50140b;
+    --red-primary-10: #3c0f08;
+    --red-primary-11: #280a06;
+    --red-primary-12: #140503;
+    /*  */
+    --blue-primary-0: #e9f5fb;
+    --blue-primary-1: #d3ebf7;
+    --blue-primary-2: #bde0f2;
+    --blue-primary-3: #a7d6ee;
+    --blue-primary-4: #7ac2e6;
+    --blue-primary-5: #4eaddd;
+    --blue-primary-6: #2299d5;
+    --blue-primary-7: #1b7aaa;
+    --blue-primary-8: #145c80;
+    --blue-primary-9: #0e3d55;
+    --blue-primary-10: #0a2e40;
+    --blue-primary-11: #071f2b;
+    --blue-primary-12: #030f15;
+    /*  */
+    --danger-primary-0: #f0e4d7;
+    --danger-primary-1: #e1c9af;
+    --danger-primary-2: #e3a155;
+    --danger-primary-3: #d98c34;
+    --danger-primary-4: #764d1d;
+    --danger-primary-5: #3b2711;
+    /*  */
+    --neutral-white: #ffffff;
+    --neutral-0: rgba(250, 250, 250, 1);
+    --neutral-100: rgba(242, 242, 242, 1);
+    --neutral-200: rgba(230, 230, 230, 1);
+    --neutral-300: #cccccc;
+    --neutral-400: #b3b3b3;
+    --neutral-500: #212121;
+    --neutral-900: #1e1e1f;
+  }
+}
+@layer components {
+  html,
+  body {
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: var(--neutral-0);
+    color: var(--neutral-500);
+    font-family: var(--font-iransans);
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: bold;
+  }
+  h2 {
+    font-size: 17px;
+  }
+  h3 {
+    font-size: 14px;
+  }
+  h4 {
+    font-size: 11px;
+  }
+  h5 {
+    font-size: 9px;
+  }
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    padding-right: 8px;
+  }
+  .modal_backdrop {
+    @apply fixed max-w-screen-xs overflow-hidden m-auto inset-0 z-50 bg-[rgba(21,21,21,32%)] backdrop-blur-md flex justify-center transition-all duration-500;
+  }
+  .modal_container {
+    @apply transform shadow-primary-1 flex flex-col transition-transform duration-500 bg-neutral-0 p-4 ease-in-out;
+  }
+  .modal_header {
+    @apply w-full flex items-center border-b border-neutral-200 pb-2;
+  }
+  .modal_content {
+    @apply overflow-y-auto scrollbar-hide p-4 flex-1;
+  }
+}
+@layer utilities {
+}
