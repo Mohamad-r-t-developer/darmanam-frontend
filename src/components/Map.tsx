@@ -14,10 +14,14 @@ declare global {
 const NESHAN_API_KEY = "web.b02fe766bd6e4afc956797e0ef147f79";
 const NESHAN_SERVICE_KEY = "service.14eb0cde052a44fd9f7ea6f5e3b6f470";
 
-export default function Map({setAddress}) {
+export default function Map({
+  setAddress,
+}: {
+  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
+}) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [mapInstance, setMapInstance] = useState<any>(null);
-  const [selectedCoords, setSelectedCoords] = useState<[number, number] | null>(null);
+  const [_selectedCoords, setSelectedCoords] = useState<[number, number] | null>(null);
   const markerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -52,6 +56,7 @@ export default function Map({setAddress}) {
 
       setMapInstance(map);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isScriptLoaded, mapInstance]);
 
   const fetchAddress = async (lat: number, lng: number) => {
@@ -124,8 +129,6 @@ export default function Map({setAddress}) {
         >
           موقعیت من
         </button>
-
-        
       </div>
     </>
   );
