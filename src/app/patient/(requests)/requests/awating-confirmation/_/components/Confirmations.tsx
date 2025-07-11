@@ -8,7 +8,7 @@ import { RequestStatusType } from "@/types/requestStatusType";
 
 
 export default function Confirmations() {
-  const [requestStatus, _setRequestStaus] = useState<RequestStatusType>("founded");
+  const [requestStatus, _setRequestStaus] = useState<RequestStatusType>("notfound");
   return (
     <>
       {requestStatus === "founded" ? <FoundedNurse status={requestStatus}  /> : <PendingRequest status={requestStatus} />}

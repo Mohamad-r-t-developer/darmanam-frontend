@@ -27,7 +27,7 @@ const negativePoints = [
 ];
 
 export default function Page() {
-  const [activePoints, setPoints] = useState<"negative" | "positive">("negative");
+  const [activePoints, setPoints] = useState<"negative" | "positive">("positive");
   const [scoringPoints, setScoringPoints] = useState<string[]>([]);
 
   const clickHandler = (point: string) => {
