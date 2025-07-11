@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import RequestRegister from "./RequestRegister";
-import ToggleSwitch from "@/ui/ToggleSwitch";
 import RequestCost from "./RequestCost";
 import { AddSvg, MinusSvg } from "@/ui/icon";
 
@@ -90,7 +89,10 @@ export default function Injection({ isOpen }: InjectionProps) {
 
 function InjectionFields({ ampouleTitle, type, onClick }: InjectionFieldsProps) {
   const [ampoules, setAmpoules] = useState(1);
-  const [isSerumConnection, setIsSerumConnection] = useState<boolean>(true);
+
+  useEffect(() => {
+    setAmpoules(1);
+  }, [type]);
 
   const increase = () => {
     if (ampoules < 50) setAmpoules((prev) => prev + 1);
@@ -101,15 +103,6 @@ function InjectionFields({ ampouleTitle, type, onClick }: InjectionFieldsProps) 
 
   return (
     <div className="w-full flex flex-col gap-4 text-neutral-500">
-      {type == "سرم" && (
-        <div className="w-full text-sm font-medium">
-          <ToggleSwitch
-            initialChecked={true}
-            label="وصل سرم"
-            onChange={() => setIsSerumConnection(!isSerumConnection)}
-          />
-        </div>
-      )}
       <div className="w-full flex items-center justify-between text-sm font-medium">
         <label htmlFor="ampoules">{ampouleTitle}</label>
         <div className="flex items-center justify-center gap-2 py-2 border border-neutral-200 rounded-primary-2">

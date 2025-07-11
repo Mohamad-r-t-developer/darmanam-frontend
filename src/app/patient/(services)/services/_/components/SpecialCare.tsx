@@ -8,14 +8,14 @@ type SpecialCareProps = {
 type ModalState = "selectService" | "successMessage";
 
 export default function SpecialCare({ isOpen }: SpecialCareProps) {
-  const [selectedField, setSelectedField] = useState<string>("");
+  const [selectedField, setSelectedField] = useState<string[]>([]);
   const [modalState, setModalState] = useState<ModalState>("selectService");
   const fields = ["سوند ادراری", "ساکشن", "سوند معده", "تعویض تراک", "تعویض پگ"];
 
   useEffect(() => {
     if (!isOpen) {
       const timeout = setTimeout(() => {
-        setSelectedField("");
+        setSelectedField([]);
         setModalState("selectService");
       }, 300);
       return () => clearTimeout(timeout);
@@ -37,8 +37,14 @@ export default function SpecialCare({ isOpen }: SpecialCareProps) {
         {fields.map((field) => (
           <div
             key={field}
-            onClick={() => setSelectedField(field)}
-            className={`${selectedField == field ? "bg-secondary-400 text-neutral-0" : ""} cursor-pointer border border-neutral-200 rounded-primary-2 flex items-center justify-center`}
+            onClick={() => {
+              if (selectedField.includes(field)) {
+                setSelectedField(selectedField.filter((f) => f !== field));
+              } else {
+                setSelectedField([...selectedField, field]);
+              }
+            }}
+            className={`${selectedField.includes(field) ? "bg-secondary-400 text-neutral-0" : ""} cursor-pointer border border-neutral-200 rounded-primary-2 flex items-center justify-center`}
           >
             {field}
           </div>
@@ -50,7 +56,7 @@ export default function SpecialCare({ isOpen }: SpecialCareProps) {
       </div>
       <button
         onClick={clickHandler}
-        disabled={selectedField === ""}
+        disabled={selectedField.length === 0}
         className="h-12 rounded-primary-2 w-full disabled:bg-primary-100 bg-primary-500 text-[13px] font-semibold text-neutral-0"
       >
         افزودن به سبد درخواست ها

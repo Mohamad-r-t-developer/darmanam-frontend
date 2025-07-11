@@ -90,12 +90,14 @@ export default function LandingFooter() {
               قم - قم - بلوار امین - کوچه 14 - فرعی پنجم - پلاک 213 - طبقه چهارم - واحد ششم
             </span>
           </div>
-          <div className="w-full flex items-center gap-4">
-            <div className="bg-primary-700 text-primary-400 rounded-full p-1">
-              <PhoneSvg className="w-5 h-5" />
+          <a href="tel:02538874142">
+            <div className="w-full flex items-center gap-4">
+              <div className="bg-primary-700 text-primary-400 rounded-full p-1">
+                <PhoneSvg className="w-5 h-5" />
+              </div>
+              <span className="text-sm">025-38874142</span>
             </div>
-            <span className="text-sm">025-38874142</span>
-          </div>
+          </a>
         </div>
       </div>
     </footer>

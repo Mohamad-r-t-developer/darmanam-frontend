@@ -1,7 +1,13 @@
 "use client";
 import { IconType } from "@/types/iconType";
 import { AddressSvg, DoctorGivingAdviceSvg, PurchaseOrderSvg, WalletSvg } from "@/ui/icon";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+const pagesMap = [
+  { title: "تکمیل اطلاعات", url: "info" },
+  { title: "انتخاب آدرس و زمان", url: "schedule" },
+];
 
 type Steps = 0 | 1 | 2 | 3 | 4;
 export default function RequestSteper({ step }: { step: Steps }) {
@@ -40,9 +46,14 @@ function SingleStep({
   activeStep: number;
   Icon: IconType;
 }) {
+  const router = useRouter();
   return (
     <div
-      className={`${step >= activeStep ? "text-secondary-400" : ""} flex flex-col items-center justify-start gap-1`}
+      onClick={() => {
+        const page = pagesMap.find((p) => p.title === title);
+        if (page) router.push(`/patient/requests/${page.url}`);
+      }}
+      className={`${step >= activeStep ? "text-secondary-400" : ""} flex flex-col cursor-pointer items-center justify-start gap-1`}
     >
       <Icon className="w-4 h-4" />
       <span className="text-[9px] text-center">{title}</span>
