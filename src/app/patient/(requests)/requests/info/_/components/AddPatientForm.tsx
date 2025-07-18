@@ -1,89 +1,72 @@
-import { useState } from "react";
+import { addPatientShema } from "@/schemas/PatientSchema";
+import { AddPatientValues } from "@/types/patientTypes";
+import RHFGenderRadioGroup from "@/ui/RHFGenderRadioGroup";
+import RHFTextField from "@/ui/RHFTextField";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 export default function AddPatientForm() {
-  const [gender, setGender] = useState<"men" | "women" | undefined>(undefined);
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AddPatientValues>({
+    mode: "onChange",
+    resolver: yupResolver(addPatientShema),
+    defaultValues: {
+      gender: "MALE",
+    },
+  });
+
+  const SubmitHandler = (data: AddPatientValues) => {
+    console.log(data);
+  };
+
   return (
-    <form className="w-full space-y-6">
-      <div className="w-full flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium">
-          کد ملی بیمار را وارد کنید
-        </label>
-        <input
-          type="text"
-          id="name"
-          placeholder="کد ملی"
-          className="placeholder:text-sm placeholder:text-neutral-200 outline-none rounded-primary-1 border px-4 py-2 border-neutral-200"
-        />
-        <span className="text-[9px]">
-          کد ملی شما تنها برای ایجاد پرونده سلامت استفاده می‌شود و صرفاً جهت شناسایی دقیق بیمار است.
-          اطلاعات شما محرمانه بوده و ممکن است در آینده برای استعلام بیمه نیز به‌کار رود.
-        </span>
-      </div>
-      <div className="w-full flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium">
-          نام و نام خانوادگی بیمار
-        </label>
-        <input
-          type="text"
-          id="name"
-          placeholder="نام بیمار"
-          className="placeholder:text-sm placeholder:text-neutral-200 outline-none rounded-primary-1 border px-4 py-2 border-neutral-200"
-        />
-      </div>
-      <div className="w-full space-y-2">
-        <label className="text-sm font-medium">جنسیت را مشخص کنید</label>
-        <div className="w-full flex items-center gap-6">
-          <div className="flex items-center gap-2">
-            <input
-              checked={gender === "men"}
-              type="radio"
-              name="gender"
-              onChange={() => setGender("men")}
-            />
-            <label htmlFor="true" className="text-sm">
-              مرد
-            </label>
-          </div>
-          <div className="flex items-center gap-2">
-            <input
-              checked={gender === "women"}
-              type="radio"
-              name="gender"
-              onChange={() => setGender("women")}
-            />
-            <label htmlFor="false" className="text-sm">
-              زن
-            </label>
-          </div>
-        </div>
-      </div>
-      <div className="w-full flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium">
-          سن بیمار
-        </label>
-        <input
-          type="number"
-          id="age"
-          placeholder="سن بیمار"
-          className="placeholder:text-sm placeholder:text-neutral-200 outline-none rounded-primary-1 border px-4 py-2 border-neutral-200"
-        />
-      </div>
-      <div className="w-full flex flex-col gap-2">
-        <label htmlFor="name" className="text-sm font-medium">
-          شماره تماس
-        </label>
-        <input
-          type="text"
-          id="phoneNumber"
-          placeholder="شماره تماس"
-          className="placeholder:text-sm placeholder:text-neutral-200 outline-none rounded-primary-1 border px-4 py-2 border-neutral-200"
-        />
-      </div>
+    <form onSubmit={handleSubmit(SubmitHandler)} className="w-full space-y-4">
+      <RHFTextField
+        name="nationalCode"
+        register={register}
+        error={errors.nationalCode}
+        label="کد ملی بیمار را وارد کنید"
+        placeholder="کد ملی"
+        note="کد ملی شما تنها برای ایجاد پرونده سلامت استفاده می‌شود و صرفاً جهت شناسایی دقیق بیمار است.اطلاعات شما محرمانه بوده و ممکن است در آینده برای استعلام بیمه نیز به‌کار رود."
+      />
+      <RHFTextField
+        name="fullName"
+        register={register}
+        error={errors.fullName}
+        label="نام و نام خانوادگی"
+        placeholder="نام بیمار"
+      />
+      <RHFGenderRadioGroup name="gender" control={control} error={errors.gender} />
+      <RHFTextField
+        register={register}
+        type="number"
+        error={errors.age}
+        name="age"
+        label="سن بیمار را مشخص کنید"
+        placeholder="سن بیمار"
+      />
+      <RHFTextField
+        register={register}
+        error={errors.phoneNumber}
+        name="phoneNumber"
+        label="شماره تماس بیمار را وارد کنید"
+        placeholder="شماره تماس"
+      />
       <div className="w-full flex items-center gap-4">
-        <button className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-neutral-0 bg-primary-500">
+        <button
+          type="submit"
+          className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-neutral-0 bg-primary-500"
+        >
           تایید
         </button>
-        <button className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-tertiary-500 border border-tertiary-500">
+        <button
+          type="button"
+          className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-tertiary-500 border border-tertiary-500"
+        >
           انصراف
         </button>
       </div>

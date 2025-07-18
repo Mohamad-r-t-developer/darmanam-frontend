@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 
 export default function PatientFooter() {
   const pathName = usePathname();
-
+ 
+  
   return (
     <footer className="fixed bottom-0 left-0 right-0 max-w-screen-xs m-auto w-full h-16 flex items-center justify-around shadow-primary-2 py-2 bg-neutral-Pure_White">
       <Link

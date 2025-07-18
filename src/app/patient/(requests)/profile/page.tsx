@@ -62,6 +62,7 @@ export default function Page() {
       setModalState({ title: modalItem.title, component: modalItem.component, open: true });
     }
   };
+
   return (
     <div className="w-full h-full flex flex-col gap-1">
       <CenterModal

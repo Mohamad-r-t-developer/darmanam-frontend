@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { PatientAddressValues } from "@/types/patientTypes";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
+import { UseFormSetValue } from "react-hook-form";
 
 // اعلام L برای TypeScript
 declare global {
@@ -14,11 +16,7 @@ declare global {
 const NESHAN_API_KEY = "web.b02fe766bd6e4afc956797e0ef147f79";
 const NESHAN_SERVICE_KEY = "service.14eb0cde052a44fd9f7ea6f5e3b6f470";
 
-export default function Map({
-  setAddress,
-}: {
-  setAddress: React.Dispatch<React.SetStateAction<string | null>>;
-}) {
+export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAddressValues> }) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [mapInstance, setMapInstance] = useState<any>(null);
   const [_selectedCoords, setSelectedCoords] = useState<[number, number] | null>(null);
@@ -31,7 +29,7 @@ export default function Map({
         maptype: "neshan",
         poi: false,
         traffic: false,
-        center: [35.699756, 51.338076],
+        center: [34.642423, 50.880689],
         zoom: 14,
       });
 
@@ -40,7 +38,8 @@ export default function Map({
         const lng = e.latlng.lng;
 
         setSelectedCoords([lat, lng]);
-
+        setValue("lat", lat);
+        setValue("lng", lng);
         // حذف مارکر قبلی
         if (markerRef.current) {
           map.removeLayer(markerRef.current);
@@ -60,6 +59,7 @@ export default function Map({
   }, [isScriptLoaded, mapInstance]);
 
   const fetchAddress = async (lat: number, lng: number) => {
+    console.log(lat, lng);
     try {
       const res = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
         headers: {
@@ -70,10 +70,13 @@ export default function Map({
       if (!res.ok) throw new Error("خطا در دریافت آدرس");
 
       const data = await res.json();
-      setAddress(data.formatted_address || "آدرس نامشخص");
+      setValue("address", data.formatted_address, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
     } catch (error) {
-      console.error(error);
-      setAddress("خطا در دریافت آدرس");
+      console.log(error);
+      setValue("address", "خطا در دریافت آدرس");
     }
   };
 
@@ -84,28 +87,23 @@ export default function Map({
       return;
     }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
 
-        if (mapInstance) {
-          mapInstance.setView([latitude, longitude], 16);
+      if (mapInstance) {
+        mapInstance.setView([latitude, longitude], 16);
 
-          if (markerRef.current) {
-            mapInstance.removeLayer(markerRef.current);
-          }
-
-          const userMarker = window.L.marker([latitude, longitude]).addTo(mapInstance);
-          markerRef.current = userMarker;
-          setSelectedCoords([latitude, longitude]);
-
-          fetchAddress(latitude, longitude); // ← گرفتن آدرس
+        if (markerRef.current) {
+          mapInstance.removeLayer(markerRef.current);
         }
-      },
-      () => {
-        alert("دسترسی به موقعیت مکانی امکان‌پذیر نیست.");
+
+        const userMarker = window.L.marker([latitude, longitude]).addTo(mapInstance);
+        markerRef.current = userMarker;
+        setSelectedCoords([latitude, longitude]);
+
+        fetchAddress(latitude, longitude); // ← گرفتن آدرس
       }
-    );
+    });
   };
 
   return (

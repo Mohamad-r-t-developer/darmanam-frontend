@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "@/providers/SocketProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "درمانم",
@@ -15,7 +16,7 @@ export const viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false,  
+  userScalable: false,
 };
 
 export default function RootLayout({
@@ -28,10 +29,12 @@ export default function RootLayout({
       <body
         className={`${iranSansFont.variable} antialiased shadow-primary-1 m-auto  max-w-screen-xs`}
       >
-        <SocketProvider>
-          <Toaster />
-          {children}
-        </SocketProvider>
+        <ReactQueryProvider>
+          <SocketProvider>
+            <Toaster />
+            {children}
+          </SocketProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

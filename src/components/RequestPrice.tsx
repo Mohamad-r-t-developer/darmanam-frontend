@@ -1,30 +1,18 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-
 type RequestPriceProps = {
-  href: string;
   price: number;
   buttonTitle?: string;
   disabled?: boolean;
 };
 
 export default function RequestPrice({
-  href,
   price,
   buttonTitle = "ادامه",
   disabled = false,
 }: RequestPriceProps) {
-  const router = useRouter();
-  const clickHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    router.push(href);
-  };
-
   return (
     <div className="fixed max-w-screen-xs m-auto bottom-16 h-14 w-full flex items-center gap-4 p-4 bg-neutral-100">
       <button
-        onClick={clickHandler}
+        type="submit"
         disabled={disabled}
         className={`disabled:bg-primary-100 bg-primary-500 py-3 flex-1 text-sm text-neutral-0 rounded-primary-1`}
       >

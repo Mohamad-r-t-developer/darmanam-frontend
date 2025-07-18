@@ -60,12 +60,7 @@ export default function LandingFooter() {
           >
             <InstagramSvg className="w-5 h-5" />
           </Link>
-          <Link
-            href="/"
-            className="w-10 h-10 flex items-center justify-center rounded-primary-3 bg-primary-50"
-          >
-            <YoutubeSvg className="w-5 h-5" />
-          </Link>
+         
         </div>
       </div>
       {/* Introducing to friends */}
@@ -87,7 +82,7 @@ export default function LandingFooter() {
               <LoacationSvg className="w-5 h-5" />
             </div>
             <span className="text-sm">
-              قم - قم - بلوار امین - کوچه 14 - فرعی پنجم - پلاک 213 - طبقه چهارم - واحد ششم
+              قم خیابان دل آذر مرکز رشد و نوآوری دانشگاه علوم پزشکی
             </span>
           </div>
           <a href="tel:02538874142">
@@ -95,7 +90,7 @@ export default function LandingFooter() {
               <div className="bg-primary-700 text-primary-400 rounded-full p-1">
                 <PhoneSvg className="w-5 h-5" />
               </div>
-              <span className="text-sm">025-38874142</span>
+              <span className="text-sm">09999936508</span>
             </div>
           </a>
         </div>

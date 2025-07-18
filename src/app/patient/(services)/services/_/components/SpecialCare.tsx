@@ -3,11 +3,12 @@ import RequestRegister from "./RequestRegister";
 
 type SpecialCareProps = {
   isOpen: boolean;
+  onClose: () => void;
 };
 
 type ModalState = "selectService" | "successMessage";
 
-export default function SpecialCare({ isOpen }: SpecialCareProps) {
+export default function SpecialCare({ isOpen, onClose }: SpecialCareProps) {
   const [selectedField, setSelectedField] = useState<string[]>([]);
   const [modalState, setModalState] = useState<ModalState>("selectService");
   const fields = ["سوند ادراری", "ساکشن", "سوند معده", "تعویض تراک", "تعویض پگ"];
@@ -26,7 +27,7 @@ export default function SpecialCare({ isOpen }: SpecialCareProps) {
     setModalState("successMessage");
   };
 
-  if (modalState === "successMessage") return <RequestRegister title="مراقبت" />;
+  if (modalState === "successMessage") return <RequestRegister title="مراقبت" onClose={onClose} />;
 
   return (
     <div className="w-full flex flex-col gap-4 text-neutral-500">

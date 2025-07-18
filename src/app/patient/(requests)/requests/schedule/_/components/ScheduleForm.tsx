@@ -40,7 +40,9 @@ export default function ScheduleForm() {
           addressTitle="خانه پدری"
         /> */}
           <div className="w-full flex flex-col gap-2 items-center text-neutral-400">
-            <NotFoundLocationSvg className="w-16 h-16 text-neutral-200" />
+            <Link href="/patient/requests/address-list">
+              <NotFoundLocationSvg className="w-16 h-16 text-neutral-200" />
+            </Link>
             <h3 className="font-medium">عدم وجود آدرس</h3>
             <p className="text-[9px]">
               برای ادامه روند ثبت درخواست شما میتوانید با زدن دکمه افزودن آدرس، آدرس جدید را ثبت
@@ -141,13 +143,7 @@ export default function ScheduleForm() {
           </div>
         )}
       </div>
-
-      <RequestPrice
-        href="/patient/requests/awating-confirmation"
-        disabled={false}
-        buttonTitle="ثبت درخواست"
-        price={50000}
-      />
+      <RequestPrice disabled={false} buttonTitle="ثبت درخواست" price={50000} />
     </form>
   );
 }

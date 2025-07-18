@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import RequestRegister from "./RequestRegister";
+import RequestCost from "./RequestCost";
 
 type CheckupPrpos = {
   isOpen: boolean;
+  onClose: () => void;
 };
 
 type ModalState = "selectService" | "successMessage";
 
-export default function Checkup({ isOpen }: CheckupPrpos) {
+export default function Checkup({ isOpen, onClose }: CheckupPrpos) {
   const [selectedField, setSelectedField] = useState<string[]>([]);
   const [modalState, setModalState] = useState<ModalState>("selectService");
   const fields = ["کنترل فشار و قند خون", "کنترل اکسیژن خون", "تب سنجی"];
@@ -26,7 +28,7 @@ export default function Checkup({ isOpen }: CheckupPrpos) {
     setModalState("successMessage");
   };
 
-  if (modalState === "successMessage") return <RequestRegister title="پایش" />;
+  if (modalState === "successMessage") return <RequestRegister title="پایش" onClose={onClose} />;
 
   return (
     <div className="w-full flex flex-col gap-2 text-neutral-500">
@@ -50,10 +52,7 @@ export default function Checkup({ isOpen }: CheckupPrpos) {
           </div>
         ))}
       </div>
-      <div className=" w-full flex items-center gap-1 py-2 text-[11px]">
-        <span className="font-semibold">هزینه درخواست : </span>
-        <span className="text-neutral-400">برای محاسبه هزینه درخواست خود را انتخاب کنید</span>
-      </div>
+      <RequestCost/>
       <button
         onClick={clickHandler}
         disabled={selectedField.length === 0}
