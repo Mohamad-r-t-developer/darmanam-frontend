@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { PatientAddressValues } from "@/types/patientTypes";
+
+import { PatientAddressValues } from "@/types/addressTypes";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { UseFormSetValue } from "react-hook-form";
