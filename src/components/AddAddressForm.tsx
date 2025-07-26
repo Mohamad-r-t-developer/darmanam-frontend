@@ -1,13 +1,19 @@
 "use client";
 import Map from "@/components/Map";
+import { useAddAddress } from "@/hooks/useAddress";
 import { addAddressSchema } from "@/schemas/PatientSchema";
-import { PatientAddressValues } from "@/types/patientTypes";
+import { PatientAddressValues } from "@/types/addressTypes";
 import RHFTextareaField from "@/ui/RHFTextareaField";
 import RHFTextField from "@/ui/RHFTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 export default function AddAddressForm() {
+  const pathName = usePathname();
+  const router = useRouter();
+  const { mutateAsync: addAddress } = useAddAddress();
   const {
     register,
     setValue,
@@ -15,8 +21,14 @@ export default function AddAddressForm() {
     formState: { isValid, errors },
   } = useForm<PatientAddressValues>({ mode: "onChange", resolver: yupResolver(addAddressSchema) });
 
-  const onSubmit = (data: PatientAddressValues) => {
-    console.log(data);
+  const onSubmit = async (values: PatientAddressValues) => {
+    try {
+      const data = await addAddress(values);
+      toast.success(data.message);
+      router.push(`/patient/${pathName.split("/")[2]}/address-list`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -31,20 +43,19 @@ export default function AddAddressForm() {
         error={errors.title}
       />
       <RHFTextareaField
-        name="address"
+        name="fullAddress"
         register={register}
         label="آدرس کامل"
         placeholder="لطفا از روی نقشه لوکیشن خود را انتخاب کنید"
         note="در صورت مغایرت آدرس را اصلاح کنید"
-        error={errors.address}
+        error={errors.fullAddress}
       />
-
       <RHFTextField
-        name="addressDetail"
+        name="addressDetails"
         register={register}
         label="جزئیات آدرس"
         placeholder="به طور مثال پلاک ، واحد ، بلوک"
-        error={errors.addressDetail}
+        error={errors.addressDetails}
       />
       <button
         disabled={!isValid}

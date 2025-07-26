@@ -94,6 +94,18 @@ export default {
         "primary-2": "16px",
         "primary-3": "12px",
       },
+      keyframes: {
+        heartbeat: {
+          "0%, 100%": { transform: "scale(1)" },
+          "14%": { transform: "scale(1.1)" },
+          "28%": { transform: "scale(1)" },
+          "42%": { transform: "scale(1.1)" },
+          "70%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        heartbeat: "heartbeat 1.5s infinite ease-in-out",
+      },
     },
   },
 

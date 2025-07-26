@@ -1,10 +1,12 @@
-
 import Slider from "@/components/Slider";
 import Image from "next/image";
 import SingleHealthPackage from "./_/components/SingleHealthPackage";
 import Services from "./_/components/Services";
+import { getAllServicesApi } from "@/services/servicesService";
+import Link from "next/link";
 
-export default function page() {
+export default async function page() {
+  const { data: services } = await getAllServicesApi();
   return (
     <div className="w-full flex pt-4 flex-col gap-8 items-center">
       <div className="w-[90%]">
@@ -16,7 +18,14 @@ export default function page() {
       </div>
       {/* services */}
       <h2 className="font-medium">سرویس های درمانی</h2>
-      <Services />
+      <Services servicesList={services} />
+      <h2 className="font-medium">آموزش</h2>
+      <Link
+        href="/patient/blogs"
+        className="bg-secondary-200 text-neutral-0 w-[90%] rounded-primary-2 flex items-center justify-center h-10"
+      >
+        رفتن به صفحه آموزش
+      </Link>
       {/* packages */}
       <div className="w-full flex flex-col gap-4 items-center">
         <h2 className="font-medium">پکیج های درمانی</h2>

@@ -1,6 +1,6 @@
 import { SvgProps } from "@/types/svgPropsType";
 
-export default function Logo2Svg({ className }: SvgProps) {
+export default function Logo2Svg({ className, activeAnimate }: SvgProps) {
   return (
     <svg className={className} viewBox="0 0 64 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -28,6 +28,7 @@ export default function Logo2Svg({ className }: SvgProps) {
         fill="#1EA912"
       />
       <path
+        className={`${activeAnimate && "animate-heartbeat origin-top"}`}
         fillRule="evenodd"
         clipRule="evenodd"
         d="M19.3358 7.36429C19.1439 7.37987 18.9814 7.28477 18.2321 6.84618C17.483 6.40768 16.147 5.62571 15.4173 4.58686C14.6875 3.54801 14.564 2.25227 14.9374 1.38462C15.3109 0.516936 16.1814 0.0773313 16.9525 0.023303C17.7237 -0.0306464 18.3955 0.300984 19.2024 0.281725C20.0094 0.262426 20.9514 -0.107759 21.8096 0.0310805C22.6678 0.169881 23.442 0.817742 23.6979 1.75098C23.9538 2.68423 23.6912 3.90281 22.9835 4.84126C22.2758 5.77967 21.1229 6.43791 20.4358 6.83016C19.7488 7.22245 19.5276 7.34874 19.3358 7.36429Z"

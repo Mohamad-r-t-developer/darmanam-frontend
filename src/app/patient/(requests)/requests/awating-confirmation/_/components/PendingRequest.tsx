@@ -1,4 +1,4 @@
-import { RequestStatusType } from "@/types/requestStatusType";
+import { RequestStatusType } from "@/types/requestTypes";
 import RequestStatus from "./RequestStatus";
 import RequestDetail from "@/components/RequestDetail";
 import RequestActions from "@/components/RequestActions";

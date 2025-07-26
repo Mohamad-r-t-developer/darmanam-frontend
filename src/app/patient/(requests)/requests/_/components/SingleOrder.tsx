@@ -1,6 +1,10 @@
+import { ServiceItemType } from "@/types/serviceTypes";
 import { AddSvg, DeleteSvg, MinusSvg } from "@/ui/icon";
+import transformCategoryToPersian from "@/utility/transformCategoryToPersian";
 
-export default function SingleOrder() {
+export default function SingleOrder({ request }: { request: ServiceItemType }) {
+
+  const categoryTitle = transformCategoryToPersian(request.category);
   const increase = () => {};
   const decrease = () => {};
   return (
@@ -9,7 +13,7 @@ export default function SingleOrder() {
       <div className="w-full flex flex-col gap-4 pb-4 border-b border-neutral-200">
         <div className="w-full flex items-center justify-between">
           <h3 className="font-medium">نوع درخواست</h3>
-          <h3 className="font-medium">پانسمان-جراحی</h3>
+          <h3 className="font-medium">{categoryTitle}-{request.serviceName}</h3>
         </div>
         <div className="w-full flex items-center justify-between">
           <h3>میزان جراحت</h3>
@@ -20,7 +24,7 @@ export default function SingleOrder() {
               </button>
               <div className="flex items-center gap-1 text-[11px] font-bold">
                 <span>cm</span>
-                <span>5</span>
+                <span>{request.woundLength}</span>
               </div>
               <button onClick={decrease} type="button" className="px-2 ">
                 <MinusSvg className="w-4 h-4" />

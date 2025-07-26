@@ -1,3 +1,5 @@
+import { RequestItemType } from "./requestTypes";
+
 export type AddPatientValues = {
   nationalCode: string;
   fullName: string;
@@ -20,13 +22,11 @@ export type PatientInfoValues = {
     text?: string;
   };
   medicalFiles?: FileList;
-  patientHistory: string;
+  patientHistory?: string;
 };
 
-export type PatientAddressValues = {
-  title: string;
-  address: string;
-  addressDetail: string;
-  lat: number;
-  lng: number;
+
+export type PatientRequestType = {
+  patientId?: string;
+  requestsList?: RequestItemType[] | [];
 };

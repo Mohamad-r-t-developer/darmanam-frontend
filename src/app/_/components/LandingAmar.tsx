@@ -3,9 +3,9 @@ export default function LandingAmar() {
     <div className="w-full flex flex-col items-center gap-4">
       <h2 className="font-bold text-neutral-500">آمار به روز درمانم</h2>
       <div className="w-full grid grid-cols-2 gap-6 grid-rows-2">
-        <SingleAmar title="تعداد کاربران ثبت نام شده" amar="256,000 نفر" />
-        <SingleAmar title="تعداد خدمات انجام شده" amar="129,000 عدد" />
-        <SingleAmar title="تعداد پرستاران تا به امروز" amar="50,000 نفر" />
+        <SingleAmar title="تعداد کاربران ثبت نام شده" amar="100 نفر" />
+        <SingleAmar title="تعداد خدمات انجام شده" amar="500 عدد" />
+        <SingleAmar title="تعداد پرستاران تا به امروز" amar="20 نفر" />
         <SingleAmar title="میانگین امتیاز پرستاران" amar="4.5" />
       </div>
     </div>

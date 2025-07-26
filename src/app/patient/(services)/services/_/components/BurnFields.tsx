@@ -1,28 +1,22 @@
 "use client";
-
 import { useForm, Controller } from "react-hook-form";
 import ToggleSwitch from "@/ui/ToggleSwitch";
 import RequestCost from "./RequestCost";
-import { BurnValues } from "@/types/serviceTypes";
-
-
+import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
+import { BurnValues } from "@/types/inputValueTypes";
 
 type SubServiceProps = {
+  subService: SubServiceType;
+  serviceCategory: ServiceCategoryType;
   onClick: (data: BurnValues) => void;
 };
 
-const burnFields = ["سر", "یک دست", "دو دست", "یک پا", "دو پا", "قفسه سینه", "شکم", "صورت"];
-
-export default function BurnFields({ onClick }: SubServiceProps) {
-  const {
-    register,
-    handleSubmit,
-    control,
-    watch,
-    setValue,
-    getValues,
-  } = useForm<BurnValues>({
+export default function BurnFields({ onClick, subService, serviceCategory }: SubServiceProps) {
+  const { register, handleSubmit, control, watch, setValue, getValues } = useForm<BurnValues>({
     defaultValues: {
+      serviceCategory,
+      subServiceId: subService._id,
+      subServiceName: subService.name,
       area: [],
       needSupplies: false,
       supplyDetails: "",
@@ -34,9 +28,7 @@ export default function BurnFields({ onClick }: SubServiceProps) {
 
   const toggleArea = (area: string) => {
     const current = getValues("area");
-    const updated = current.includes(area)
-      ? current.filter((a) => a !== area)
-      : [...current, area];
+    const updated = current.includes(area) ? current.filter((a) => a !== area) : [...current, area];
     setValue("area", updated);
   };
 
@@ -44,6 +36,7 @@ export default function BurnFields({ onClick }: SubServiceProps) {
     onClick(data);
   };
 
+  if (!subService.price.options) return null;
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
@@ -55,21 +48,18 @@ export default function BurnFields({ onClick }: SubServiceProps) {
         className="grid grid-cols-4 gap-2 text-sm border-b pb-4"
         style={{ gridTemplateRows: "repeat(2, 56px)" }}
       >
-        {burnFields.map((field) => (
+        {subService.price.options.map((option) => (
           <div
-            key={field}
-            onClick={() => toggleArea(field)}
+            key={option._id}
+            onClick={() => toggleArea(option.label)}
             className={`${
-              selectedAreas.includes(field)
-                ? "bg-secondary-400 text-neutral-0"
-                : ""
+              selectedAreas.includes(option.label) ? "bg-secondary-400 text-neutral-0" : ""
             } cursor-pointer border border-neutral-200 rounded-primary-2 flex items-center justify-center`}
           >
-            {field}
+            {option.label}
           </div>
         ))}
       </div>
-
       <div className="w-full">
         <Controller
           name="needSupplies"
@@ -83,7 +73,6 @@ export default function BurnFields({ onClick }: SubServiceProps) {
           )}
         />
       </div>
-
       {needSupplies && (
         <div className="w-full">
           <textarea
@@ -94,7 +83,7 @@ export default function BurnFields({ onClick }: SubServiceProps) {
         </div>
       )}
 
-      <RequestCost />
+      <RequestCost price={subService.price} values={selectedAreas}  />
 
       <button
         type="submit"

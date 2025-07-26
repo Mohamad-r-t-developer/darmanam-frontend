@@ -1,4 +1,5 @@
-import { AddPatientValues, PatientAddressValues, PatientInfoValues } from "@/types/patientTypes";
+import { PatientAddressValues } from "@/types/addressTypes";
+import { AddPatientValues, PatientInfoValues } from "@/types/patientTypes";
 import isValidNationalCode from "@/utility/nationalCodeValidator";
 import * as yup from "yup";
 
@@ -72,7 +73,7 @@ export const patientInfoSchema: yup.ObjectSchema<PatientInfoValues> = yup
         }
         return true;
       }),
-    patientHistory: yup.string().required("لطفا شرح حال بیمار را وارد کنید"),
+    patientHistory: yup.string(),
     gender: yup
       .mixed<"MALE" | "FEMALE">()
       .oneOf(["MALE", "FEMALE"], "جنسیت نامعتبر است")
@@ -87,8 +88,8 @@ export const addAddressSchema: yup.ObjectSchema<PatientAddressValues> = yup
       .string()
       .min(3, "عنوان آدرس نباید کمتر از سه حرف باشد")
       .required("لطفا عنوان آدرس را وارد کنید"),
-    address: yup.string().required("لطفا آدرس را وارد کنید"),
-    addressDetail: yup
+    fullAddress: yup.string().required("لطفا آدرس را وارد کنید"),
+    addressDetails: yup
       .string()
       .min(5, "جزئیات آدرس نباید کمتر از 5 حرف باشد")
       .required("لطفا جزئیات آدرس را وارد کنید"),

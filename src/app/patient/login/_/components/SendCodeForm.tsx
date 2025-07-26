@@ -47,7 +47,7 @@ export default function SendCodeForm({ onSubmit }: SendCodeFormProps) {
           {...register("phoneNumber")}
           id="phoneNumber"
           type="tel"
-          className={`${errors.phoneNumber?.message ? "border-red-500" : "border-neutral-200"} pl-14 text-neutral-500 outline-none border-2  rounded-primary-2 p-2`}
+          className={`${errors.phoneNumber?.message ? "border-red-500" : "border-neutral-200 focus:border-primary-500"} pl-14 text-neutral-500 outline-none border  rounded-primary-2 p-2`}
         />
         <span className="text-[9px] mt-2 text-red-500 h-4 block">
           {errors.phoneNumber?.message}

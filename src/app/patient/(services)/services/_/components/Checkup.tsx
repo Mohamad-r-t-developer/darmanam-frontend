@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import RequestRegister from "./RequestRegister";
 import RequestCost from "./RequestCost";
+import { ModalStateType } from "@/types/modalTypes";
+import { SubServiceType } from "@/types/serviceTypes";
 
 type CheckupPrpos = {
   isOpen: boolean;
+  subService: SubServiceType;
   onClose: () => void;
 };
 
-type ModalState = "selectService" | "successMessage";
-
-export default function Checkup({ isOpen, onClose }: CheckupPrpos) {
-  const [selectedField, setSelectedField] = useState<string[]>([]);
-  const [modalState, setModalState] = useState<ModalState>("selectService");
-  const fields = ["کنترل فشار و قند خون", "کنترل اکسیژن خون", "تب سنجی"];
+export default function Checkup({ isOpen, onClose, subService }: CheckupPrpos) {
+  const [selectedSubService, setSelectedSubService] = useState<string[]>([]);
+  const [modalState, setModalState] = useState<ModalStateType>("selectService");
 
   useEffect(() => {
     if (!isOpen) {
       const timeout = setTimeout(() => {
-        setSelectedField([]);
+        setSelectedSubService([]);
         setModalState("selectService");
       }, 300);
       return () => clearTimeout(timeout);
@@ -25,37 +25,44 @@ export default function Checkup({ isOpen, onClose }: CheckupPrpos) {
   }, [isOpen]);
 
   const clickHandler = () => {
+    console.log(selectedSubService);
     setModalState("successMessage");
   };
 
-  if (modalState === "successMessage") return <RequestRegister title="پایش" onClose={onClose} />;
+  if (modalState === "successMessage") return <RequestRegister title="چک آپ" onClose={onClose} />;
 
+  if (!subService.price.options) return null;
   return (
     <div className="w-full flex flex-col gap-2 text-neutral-500">
       <div
         className="grid grid-cols-3 gap-1 text-sm"
         style={{ gridTemplateRows: "repeat(1, 56px)" }}
       >
-        {fields.map((field) => (
-          <div
-            key={field}
-            onClick={() => {
-              if (selectedField.includes(field)) {
-                setSelectedField(selectedField.filter((f) => f !== field));
-              } else {
-                setSelectedField([...selectedField, field]);
-              }
-            }}
-            className={`${selectedField.includes(field) ? "bg-secondary-400 text-neutral-0" : ""} cursor-pointer border border-neutral-200 rounded-primary-2 flex items-center justify-center text-balance text-center`}
-          >
-            {field}
-          </div>
-        ))}
+        {subService.price.options.map((option) => {
+          const isSelected = selectedSubService.some((s) => s === option.label);
+          return (
+            <div
+              key={option._id}
+              onClick={() => {
+                setSelectedSubService((prev) =>
+                  isSelected
+                    ? prev.filter((s) => s !== option.label)
+                    : [...prev, option.label]
+                );
+              }}
+              className={`${
+                isSelected ? "bg-secondary-400 text-neutral-0" : ""
+              } text-sm cursor-pointer border border-neutral-200 rounded-primary-2 flex items-center justify-center text-balance text-center`}
+            >
+              {option.label}
+            </div>
+          );
+        })}
       </div>
-      <RequestCost/>
+      <RequestCost price={subService.price} values={selectedSubService} />
       <button
         onClick={clickHandler}
-        disabled={selectedField.length === 0}
+        disabled={selectedSubService.length === 0}
         className="h-12 rounded-primary-2 w-full bg-primary-500 disabled:bg-primary-100 text-[13px] font-semibold text-neutral-0"
       >
         افزودن به سبد درخواست ها

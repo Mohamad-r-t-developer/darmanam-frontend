@@ -41,7 +41,7 @@ export default function VerifyCodeForm({ onSubmit, setStep }: VerifyCodeFormProp
           id="otp"
           dir="ltr"
           type="tel"
-          className={`${errors.otp?.message ? "border-red-500" : "border-neutral-200"}  pl-24 text-neutral-500 outline-none border  rounded-primary-2 p-2`}
+          className={`${errors.otp?.message ? "border-red-500" : "border-neutral-200 focus:border-primary-500"}  pl-24 text-neutral-500 outline-none border  rounded-primary-2 p-2`}
         />
       </div>
       <div className="w-full text-[11px] flex items-center justify-between mb-6">

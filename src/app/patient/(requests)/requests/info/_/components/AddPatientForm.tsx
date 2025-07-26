@@ -5,7 +5,7 @@ import RHFTextField from "@/ui/RHFTextField";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 
-export default function AddPatientForm() {
+export default function AddPatientForm({ onClose }: { onClose: () => void }) {
   const {
     register,
     control,
@@ -40,7 +40,12 @@ export default function AddPatientForm() {
         label="نام و نام خانوادگی"
         placeholder="نام بیمار"
       />
-      <RHFGenderRadioGroup name="gender" control={control} error={errors.gender} />
+      <RHFGenderRadioGroup
+        label="جنسیت بیمار را مشخص کنید"
+        name="gender"
+        control={control}
+        error={errors.gender}
+      />
       <RHFTextField
         register={register}
         type="number"
@@ -61,9 +66,10 @@ export default function AddPatientForm() {
           type="submit"
           className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-neutral-0 bg-primary-500"
         >
-          تایید
+          افزودن
         </button>
         <button
+          onClick={onClose}
           type="button"
           className="flex-1 text-sm font-medium py-4  rounded-primary-1 text-tertiary-500 border border-tertiary-500"
         >

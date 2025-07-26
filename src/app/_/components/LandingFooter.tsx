@@ -8,7 +8,6 @@ import {
   TelegramSvg,
   TwitterSvg,
   WhatsappSvg,
-  YoutubeSvg,
 } from "@/ui/icon";
 import Link from "next/link";
 
@@ -85,7 +84,7 @@ export default function LandingFooter() {
               قم خیابان دل آذر مرکز رشد و نوآوری دانشگاه علوم پزشکی
             </span>
           </div>
-          <a href="tel:02538874142">
+          <a href="tel:09999936508">
             <div className="w-full flex items-center gap-4">
               <div className="bg-primary-700 text-primary-400 rounded-full p-1">
                 <PhoneSvg className="w-5 h-5" />

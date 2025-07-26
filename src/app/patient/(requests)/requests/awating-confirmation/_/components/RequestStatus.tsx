@@ -1,5 +1,5 @@
 "use client";
-import { RequestStatusType } from "@/types/requestStatusType";
+import { RequestStatusType } from "@/types/requestTypes";
 import { DoctorGivingAdviceSvg } from "@/ui/icon";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";

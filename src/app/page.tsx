@@ -1,3 +1,4 @@
+import Loading from "@/ui/Loading";
 import FrequentlyAskedQuestions from "./_/components/FrequentlyAskedQuestions";
 import LandingAmar from "./_/components/LandingAmar";
 import LandingFooter from "./_/components/LandingFooter";

@@ -38,8 +38,14 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
         const lng = e.latlng.lng;
 
         setSelectedCoords([lat, lng]);
-        setValue("lat", lat);
-        setValue("lng", lng);
+        setValue("lat", lat, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
+        setValue("lng", lng, {
+          shouldValidate: true,
+          shouldDirty: true,
+        });
         // حذف مارکر قبلی
         if (markerRef.current) {
           map.removeLayer(markerRef.current);
@@ -70,13 +76,12 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
       if (!res.ok) throw new Error("خطا در دریافت آدرس");
 
       const data = await res.json();
-      setValue("address", data.formatted_address, {
+      setValue("fullAddress", data.formatted_address, {
         shouldValidate: true,
         shouldDirty: true,
       });
     } catch (error) {
       console.log(error);
-      setValue("address", "خطا در دریافت آدرس");
     }
   };
 

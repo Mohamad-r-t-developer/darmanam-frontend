@@ -2,7 +2,7 @@
 import CenterModal from "@/ui/CenterModal";
 import { useState } from "react";
 import RequestCancelForm from "../app/patient/(requests)/requests/awating-confirmation/_/components/RequestCancelForm";
-import { RequestStatusType } from "@/types/requestStatusType";
+import { RequestStatusType } from "@/types/requestTypes";
 import { NurseStatusType } from "@/types/nurseStatusype";
 import { useRouter } from "next/navigation";
 

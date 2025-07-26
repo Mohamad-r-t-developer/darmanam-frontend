@@ -4,12 +4,14 @@ type RHFGenderRadioGroupProps<T extends FieldValues> = {
   control: Control<T>;
   name: Path<T>;
   error?: FieldError;
+  label: string;
 };
 
 export default function RHFGenderRadioGroup<T extends FieldValues>({
   control,
   name,
   error,
+  label,
 }: RHFGenderRadioGroupProps<T>) {
   return (
     <Controller
@@ -18,7 +20,7 @@ export default function RHFGenderRadioGroup<T extends FieldValues>({
       rules={{ required: "جنسیت الزامی است" }}
       render={({ field }) => (
         <div className="w-full space-y-2">
-          <label className="text-sm font-medium">جنسیت را مشخص کنید</label>
+          <label className="text-sm font-medium">{label}</label>
           <div className="w-full flex items-center gap-6">
             <div className="flex items-center gap-2">
               <input

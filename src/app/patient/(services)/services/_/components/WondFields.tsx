@@ -3,16 +3,17 @@ import ToggleSwitch from "@/ui/ToggleSwitch";
 import { useEffect } from "react";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import RequestCost from "./RequestCost";
-import { WoundValues } from "@/types/serviceTypes";
+import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
+import { WoundValues } from "@/types/inputValueTypes";
 
 export default function WondFields({
-  fieldTitle,
+  subService,
+  serviceCategory,
   onClick,
   countStep,
-  type,
 }: {
-  fieldTitle: string;
-  type: string;
+  subService: SubServiceType;
+  serviceCategory: ServiceCategoryType;
   onClick: (data: WoundValues) => void;
   countStep: number;
 }) {
@@ -27,6 +28,9 @@ export default function WondFields({
     formState: { isValid },
   } = useForm<WoundValues>({
     defaultValues: {
+      subServiceName: subService.name,
+      subServiceId: subService._id,
+      serviceCategory,
       woundLength: step,
       needSupplies: false,
       supplyDetails: "",
@@ -39,11 +43,14 @@ export default function WondFields({
   // واکنش به تغییر countStep
   useEffect(() => {
     reset({
+      subServiceName: subService.name,
+      subServiceId: subService._id,
+      serviceCategory,
       woundLength: step,
       needSupplies: false,
       supplyDetails: "",
     });
-  }, [type, step, reset]);
+  }, [subService, serviceCategory, step, reset]);
 
   const increase = () => {
     if (woundLength < 200) setValue("woundLength", woundLength + step);
@@ -54,7 +61,6 @@ export default function WondFields({
   };
 
   const submitHandler = (data: WoundValues) => {
-    console.log("Form Data:", data);
     onClick(data);
   };
 
@@ -65,7 +71,7 @@ export default function WondFields({
     >
       {/* طول زخم */}
       <div className="w-full flex items-center justify-between text-sm font-medium">
-        <label htmlFor="woundLength">{`میزان ${fieldTitle} را مشخص کنید`}</label>
+        <label htmlFor="woundLength">{`میزان ${subService.name} را مشخص کنید`}</label>
         <div className="flex items-center justify-center gap-2 py-2 border border-neutral-200 rounded-primary-2">
           <button onClick={increase} type="button" className="px-2">
             <AddSvg className="w-5 h-5" />
@@ -118,7 +124,7 @@ export default function WondFields({
         </div>
       )}
 
-      <RequestCost />
+      <RequestCost price={subService.price} values={woundLength} />
 
       {/* دکمه افزودن به سبد */}
       <button
