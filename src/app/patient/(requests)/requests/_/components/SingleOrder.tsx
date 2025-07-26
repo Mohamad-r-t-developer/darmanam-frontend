@@ -1,8 +1,8 @@
-import { ServiceItemType } from "@/types/serviceTypes";
+
 import { AddSvg, DeleteSvg, MinusSvg } from "@/ui/icon";
 import transformCategoryToPersian from "@/utility/transformCategoryToPersian";
 
-export default function SingleOrder({ request }: { request: ServiceItemType }) {
+export default function SingleOrder({ request }) {
 
   const categoryTitle = transformCategoryToPersian(request.category);
   const increase = () => {};
