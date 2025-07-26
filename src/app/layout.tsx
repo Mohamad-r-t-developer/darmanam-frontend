@@ -4,8 +4,6 @@ import "@/styles/globals.css";
 import { Toaster } from "react-hot-toast";
 import { SocketProvider } from "@/providers/SocketProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import RequestProvider from "@/providers/RequestProvider";
-
 
 export const metadata: Metadata = {
   title: "درمانم",
@@ -32,12 +30,10 @@ export default function RootLayout({
         className={`${iranSansFont.variable} antialiased shadow-primary-1 m-auto  max-w-screen-xs`}
       >
         <ReactQueryProvider>
-          <RequestProvider>
-            <SocketProvider>
-              <Toaster />
-              {children}
-            </SocketProvider>
-          </RequestProvider>
+          <SocketProvider>
+            <Toaster />
+            {children}
+          </SocketProvider>
         </ReactQueryProvider>
       </body>
     </html>

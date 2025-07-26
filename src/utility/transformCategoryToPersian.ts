@@ -8,7 +8,7 @@ export default function transformCategoryToPersian(category: ServiceCategoryType
       return "تزریقات";
     case "CHECKUP":
       return "چک آپ";
-    case "SPECIAL_CARE":
-      return "مراقبت ویژه";
+    case "ADVANCED_CARE":
+      return "مراقبت های تخصصی";
   }
 }
