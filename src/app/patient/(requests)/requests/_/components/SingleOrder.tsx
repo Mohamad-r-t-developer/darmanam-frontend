@@ -1,9 +1,8 @@
-
+import { RequestItemType } from "@/types/requestTypes";
 import { AddSvg, DeleteSvg, MinusSvg } from "@/ui/icon";
 import transformCategoryToPersian from "@/utility/transformCategoryToPersian";
 
-export default function SingleOrder({ request }) {
-
+export default function SingleOrder({ request }: { request: RequestItemType }) {
   const categoryTitle = transformCategoryToPersian(request.category);
   const increase = () => {};
   const decrease = () => {};
@@ -13,7 +12,9 @@ export default function SingleOrder({ request }) {
       <div className="w-full flex flex-col gap-4 pb-4 border-b border-neutral-200">
         <div className="w-full flex items-center justify-between">
           <h3 className="font-medium">نوع درخواست</h3>
-          <h3 className="font-medium">{categoryTitle}-{request.serviceName}</h3>
+          <h3 className="font-medium">
+            {categoryTitle}-{request.serviceName}
+          </h3>
         </div>
         <div className="w-full flex items-center justify-between">
           <h3>میزان جراحت</h3>
