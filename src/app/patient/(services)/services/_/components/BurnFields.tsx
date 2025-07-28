@@ -2,21 +2,21 @@
 import { useForm, Controller } from "react-hook-form";
 import ToggleSwitch from "@/ui/ToggleSwitch";
 import RequestCost from "./RequestCost";
-import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
+import { MainServiceType, SubServiceType } from "@/types/serviceTypes";
 import { BurnValues } from "@/types/inputValueTypes";
 
 type SubServiceProps = {
   subService: SubServiceType;
-  serviceCategory: ServiceCategoryType;
+  mainService: MainServiceType;
   onClick: (data: BurnValues) => void;
 };
 
-export default function BurnFields({ onClick, subService, serviceCategory }: SubServiceProps) {
+export default function BurnFields({ onClick, subService, mainService }: SubServiceProps) {
   const { register, handleSubmit, control, watch, setValue, getValues } = useForm<BurnValues>({
     defaultValues: {
-      serviceCategory,
-      subServiceId: subService._id,
-      subServiceName: subService.name,
+      serviceCategory: mainService.category,
+      subService,
+      serviceId: mainService._id,
       area: [],
       needSupplies: false,
       supplyDetails: "",
@@ -83,7 +83,7 @@ export default function BurnFields({ onClick, subService, serviceCategory }: Sub
         </div>
       )}
 
-      <RequestCost price={subService.price} values={selectedAreas}  />
+      <RequestCost price={subService.price} values={selectedAreas} />
 
       <button
         type="submit"

@@ -3,17 +3,17 @@ import ToggleSwitch from "@/ui/ToggleSwitch";
 import { useEffect } from "react";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import RequestCost from "./RequestCost";
-import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
+import { MainServiceType, SubServiceType } from "@/types/serviceTypes";
 import { WoundValues } from "@/types/inputValueTypes";
 
 export default function WondFields({
   subService,
-  serviceCategory,
+  mainService,
   onClick,
   countStep,
 }: {
   subService: SubServiceType;
-  serviceCategory: ServiceCategoryType;
+  mainService: MainServiceType;
   onClick: (data: WoundValues) => void;
   countStep: number;
 }) {
@@ -28,9 +28,9 @@ export default function WondFields({
     formState: { isValid },
   } = useForm<WoundValues>({
     defaultValues: {
-      subServiceName: subService.name,
-      subServiceId: subService._id,
-      serviceCategory,
+      subService,
+      serviceId: mainService._id,
+      serviceCategory: mainService.category,
       woundLength: step,
       needSupplies: false,
       supplyDetails: "",
@@ -43,14 +43,14 @@ export default function WondFields({
   // واکنش به تغییر countStep
   useEffect(() => {
     reset({
-      subServiceName: subService.name,
-      subServiceId: subService._id,
-      serviceCategory,
+      subService,
+      serviceId: mainService._id,
+      serviceCategory: mainService.category,
       woundLength: step,
       needSupplies: false,
       supplyDetails: "",
     });
-  }, [subService, serviceCategory, step, reset]);
+  }, [subService, mainService, step, reset]);
 
   const increase = () => {
     if (woundLength < 200) setValue("woundLength", woundLength + step);

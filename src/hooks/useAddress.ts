@@ -3,7 +3,7 @@ import { GetAllAddressResponse } from "@/types/addressTypes";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // get all address
-export const useAddress = () =>
+export const useGetAddress = () =>
   useQuery<GetAllAddressResponse>({
     queryKey: ["get-all-address"],
     queryFn: getAllAddressApi,

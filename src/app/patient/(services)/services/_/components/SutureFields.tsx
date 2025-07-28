@@ -1,20 +1,20 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import RequestCost from "./RequestCost";
-import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
-import { SutureValues } from "@/types/inputValueTypes";
+import { MainServiceType, SubServiceType } from "@/types/serviceTypes";
+import { BurnValues } from "@/types/inputValueTypes";
 
 type SubServiceProps = {
-  onClick: (data: SutureValues) => void;
-  serviceCategory: ServiceCategoryType;
+  onClick: (data: BurnValues) => void;
+  mainService: MainServiceType;
   subService: SubServiceType;
 };
 
-export default function SutureFields({ onClick, subService, serviceCategory }: SubServiceProps) {
-  const { handleSubmit, watch, getValues, setValue } = useForm<SutureValues>({
+export default function SutureFields({ onClick, subService, mainService }: SubServiceProps) {
+  const { handleSubmit, watch, getValues, setValue } = useForm<BurnValues>({
     defaultValues: {
-      serviceCategory,
-      subServiceId: subService._id,
-      subServiceName: subService.name,
+      serviceId: mainService._id,
+      serviceCategory: mainService.category,
+      subService,
       area: [],
     },
   });
@@ -27,7 +27,7 @@ export default function SutureFields({ onClick, subService, serviceCategory }: S
     setValue("area", updated);
   };
 
-  const onSubmit = (data: SutureValues) => {
+  const onSubmit = (data: BurnValues) => {
     if (data.area.length > 0) {
       onClick(data);
     }

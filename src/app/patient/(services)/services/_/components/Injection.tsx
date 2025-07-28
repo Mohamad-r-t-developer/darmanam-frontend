@@ -30,39 +30,14 @@ export default function Injection({ isOpen, onClose, service }: InjectionProps) 
     setModalState("successMessage");
   };
 
-  const renderInjectionComponent = () => {
-    if (!selectedSubService) return null;
-    switch (selectedSubService.name) {
-      case "سرم":
-        return (
-          <InjectionFields
-            onClick={clickHandler}
-            serviceCategory={service.category}
-            subService={selectedSubService}
-            ampouleTitle="تعداد آمپول های داخل سرم"
-          />
-        );
-      case "آمپول عضلانی":
-        return (
-          <InjectionFields
-            onClick={clickHandler}
-            serviceCategory={service.category}
-            subService={selectedSubService}
-            ampouleTitle="تعداد آمپول های عضلانی"
-          />
-        );
-      case "آمپول زیر پوستی":
-        return (
-          <InjectionFields
-            onClick={clickHandler}
-            serviceCategory={service.category}
-            subService={selectedSubService}
-            ampouleTitle="تعداد آمپول های زیر پوستی"
-          />
-        );
-      default:
-        return null;
-    }
+  const renderInjectionAmpoleTitle = () => {
+    if (selectedSubService)
+      if (selectedSubService.name === "سرم") {
+        return "تعداد آمپول های داخل سرم";
+      } else if (selectedSubService?.name === "آمپول عضلانی") {
+        return "تعداد آمپول های عضلانی";
+      }
+    return "تعداد آمپول های زیر پوستی";
   };
 
   if (modalState === "successMessage") return <RequestRegister title="تزریق" onClose={onClose} />;
@@ -85,7 +60,14 @@ export default function Injection({ isOpen, onClose, service }: InjectionProps) 
           </div>
         ))}
       </div>
-      {renderInjectionComponent()}
+      {selectedSubService && (
+        <InjectionFields
+          onClick={clickHandler}
+          mainService={service}
+          subService={selectedSubService}
+          ampouleTitle={renderInjectionAmpoleTitle()}
+        />
+      )}
     </div>
   );
 }

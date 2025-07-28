@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import RequestRegister from "./RequestRegister";
 import { ModalStateType } from "@/types/modalTypes";
-import { SubServiceType } from "@/types/serviceTypes";
+import { MainServiceType } from "@/types/serviceTypes";
 import RequestCost from "./RequestCost";
 
 type SpecialCareProps = {
   isOpen: boolean;
-  subService: SubServiceType;
+  service: MainServiceType;
   onClose: () => void;
 };
 
-export default function AdvancedCare({ isOpen, onClose, subService }: SpecialCareProps) {
+export default function AdvancedCare({ isOpen, onClose, service }: SpecialCareProps) {
   const [selectedSubService, setSelectedSubService] = useState<string[]>([]);
   const [modalState, setModalState] = useState<ModalStateType>("selectService");
 
@@ -25,10 +25,18 @@ export default function AdvancedCare({ isOpen, onClose, subService }: SpecialCar
   }, [isOpen]);
 
   const clickHandler = () => {
+    const data = {
+      serviceId: service._id,
+      serviceCategory: service.category,
+      fields: selectedSubService,
+      subService,
+    };
+    console.log(data);
     setModalState("successMessage");
   };
 
   if (modalState === "successMessage") return <RequestRegister title="مراقبت" onClose={onClose} />;
+  const subService = service.children[0];
   if (subService.price.options)
     return (
       <div className="w-full flex flex-col gap-4 text-neutral-500">

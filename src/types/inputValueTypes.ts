@@ -1,33 +1,19 @@
-import { ServiceCategoryType } from "./serviceTypes";
+import { ServiceCategoryType, SubServiceType } from "./serviceTypes";
 
-export type WoundValues = {
-  subServiceName: string;
-  subServiceId: string;
+type CommonValuesType = {
+  serviceId: string;
   serviceCategory: ServiceCategoryType;
-  woundLength: number;
+  subService: SubServiceType;
   needSupplies: boolean;
   supplyDetails: string;
 };
 
-export type BurnValues = {
-  subServiceName: string;
-  subServiceId: string;
-  serviceCategory: ServiceCategoryType;
-  area: string[];
-  needSupplies: boolean;
-  supplyDetails: string;
-};
+export type WoundValues = CommonValuesType & { woundLength: number };
 
-export type SutureValues = {
-  subServiceName: string;
-  subServiceId: string;
-  serviceCategory: ServiceCategoryType;
+export type BurnValues = CommonValuesType & {
   area: string[];
 };
 
-export type InjectionValues = {
-  subServiceName: string;
-  subServiceId: string;
-  serviceCategory: ServiceCategoryType;
+export type InjectionValues = CommonValuesType & {
   count: number;
 };

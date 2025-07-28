@@ -1,25 +1,13 @@
 "use client";
-import { PatientRequestType } from "@/types/patientTypes";
-import { RequestItemType } from "@/types/requestTypes";
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-const initialRequest: PatientRequestType = {
-  patientId: "",
-  requestsList: [],
-};
+const initialRequest = {};
 
-type ServiceContextType = {
-  updateRequest: (data: RequestItemType) => void;
-  updateRequestList: (data: RequestItemType) => void;
-  requestList: RequestItemType[]|[];
-  removeRequest: () => void;
-};
-
-const ServiceContext = createContext<ServiceContextType>();
+const ServiceContext = createContext();
 
 export default function RequestProvider({ children }: { children: React.ReactNode }) {
-  const [requests, setRequests] = useState<PatientRequestType>(initialRequest);
+  const [requests, setRequests] = useState(initialRequest);
 
   useEffect(() => {
     const stored = localStorage.getItem("requests");
@@ -30,34 +18,7 @@ export default function RequestProvider({ children }: { children: React.ReactNod
     if (requests) localStorage.setItem("requests", JSON.stringify(requests));
   }, [requests]);
 
-  const updateRequest = (data: Partial<PatientRequestType>) => {
-    setRequests((prev) => {
-      const updated = { ...prev, ...data };
-      localStorage.setItem("requests", JSON.stringify(updated));
-      return updated;
-    });
-  };
-
-  const removeRequest = () => {
-    setRequests(initialRequest);
-    localStorage.removeItem("request");
-  };
-
-  const updateRequestList = (data: ServiceItemType) => {
-    const newRequest = { ...requests };
-    requests.requestsList?.push(data);
-    setRequests(newRequest);
-  };
-
-  const requestList = requests.requestsList;
-
-  return (
-    <ServiceContext.Provider
-      value={{ requestList, removeRequest, updateRequest, updateRequestList }}
-    >
-      {children}
-    </ServiceContext.Provider>
-  );
+  return <ServiceContext.Provider value={""}>{children}</ServiceContext.Provider>;
 }
 
 export const useService = () => {

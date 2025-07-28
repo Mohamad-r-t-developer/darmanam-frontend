@@ -24,7 +24,7 @@ export default function AddAddressForm() {
   const onSubmit = async (values: PatientAddressValues) => {
     try {
       const data = await addAddress(values);
-      toast.success(data.message);
+      toast.success(`${data.message} آدرس جدید`);
       router.push(`/patient/${pathName.split("/")[2]}/address-list`);
     } catch (error) {
       console.log(error);

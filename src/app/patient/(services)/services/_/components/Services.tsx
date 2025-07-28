@@ -27,7 +27,8 @@ export default function Services({ servicesList }: { servicesList: MainServiceTy
       case "CHECKUP":
         return (
           <Checkup
-            subService={selectedService.children[0]}
+          service={selectedService}
+      
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
           />
@@ -35,7 +36,8 @@ export default function Services({ servicesList }: { servicesList: MainServiceTy
       case "ADVANCED_CARE":
         return (
           <AdvancedCare
-            subService={selectedService.children[0]}
+          service={selectedService}
+           
             isOpen={isOpen}
             onClose={() => setIsOpen(false)}
           />

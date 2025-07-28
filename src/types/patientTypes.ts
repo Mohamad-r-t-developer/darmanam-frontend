@@ -1,4 +1,4 @@
-import { RequestItemType } from "./requestTypes";
+
 
 export type AddPatientValues = {
   nationalCode: string;
@@ -26,7 +26,4 @@ export type PatientInfoValues = {
 };
 
 
-export type PatientRequestType = {
-  patientId?: string;
-  requestsList?: RequestItemType[] | [];
-};
+

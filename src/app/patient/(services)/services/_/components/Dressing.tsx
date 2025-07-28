@@ -3,7 +3,7 @@ import RequestRegister from "./RequestRegister";
 import { MainServiceType, SubServiceType } from "@/types/serviceTypes";
 import { ModalStateType } from "@/types/modalTypes";
 import DressingFields from "./DressingFields";
-import { BurnValues, SutureValues, WoundValues } from "@/types/inputValueTypes";
+import { BurnValues, WoundValues } from "@/types/inputValueTypes";
 
 type DressingProps = {
   isOpen: boolean;
@@ -25,7 +25,7 @@ export default function Dressing({ isOpen, onClose, service }: DressingProps) {
     }
   }, [isOpen]);
 
-  const handleSubmit = (data: WoundValues | BurnValues | SutureValues) => {
+  const handleSubmit = (data: WoundValues | BurnValues) => {
     console.log(data);
     setModalState("successMessage");
   };
@@ -34,7 +34,7 @@ export default function Dressing({ isOpen, onClose, service }: DressingProps) {
     if (!selectedSubService) return null;
     return (
       <DressingFields
-        serviceCategory={service.category}
+        mainService={service}
         subService={selectedSubService}
         onClick={handleSubmit}
       />

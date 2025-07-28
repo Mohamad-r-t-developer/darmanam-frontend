@@ -1,4 +1,4 @@
-import { ServiceCategoryType, SubServiceType } from "@/types/serviceTypes";
+import { MainServiceType, SubServiceType } from "@/types/serviceTypes";
 import { AddSvg, MinusSvg } from "@/ui/icon";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -6,23 +6,23 @@ import RequestCost from "./RequestCost";
 import { InjectionValues } from "@/types/inputValueTypes";
 
 type InjectionFieldsProps = {
-  ampouleTitle: string;
+  ampouleTitle: string | null;
   subService: SubServiceType;
-  serviceCategory: ServiceCategoryType;
+  mainService: MainServiceType;
   onClick: (data: InjectionValues) => void;
 };
 
 export default function InjectionFields({
   ampouleTitle,
+  mainService,
   subService,
-  serviceCategory,
   onClick,
 }: InjectionFieldsProps) {
   const { control, setValue, handleSubmit, watch } = useForm<InjectionValues>({
     defaultValues: {
-      serviceCategory,
-      subServiceId: subService._id,
-      subServiceName: subService.name,
+      serviceCategory: mainService.category,
+      serviceId: mainService._id,
+      subService,
       count: 1,
     },
   });

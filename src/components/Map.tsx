@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-
 import { PatientAddressValues } from "@/types/addressTypes";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
@@ -20,8 +19,27 @@ const NESHAN_SERVICE_KEY = "service.14eb0cde052a44fd9f7ea6f5e3b6f470";
 export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAddressValues> }) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [mapInstance, setMapInstance] = useState<any>(null);
-  const [_selectedCoords, setSelectedCoords] = useState<[number, number] | null>(null);
   const markerRef = useRef<any>(null);
+
+ // eslint-disable-next-line react-hooks/exhaustive-deps
+ const fetchAddress = async (lat: number, lng: number) => {
+    try {
+      const res = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
+        headers: {
+          "Api-Key": NESHAN_SERVICE_KEY,
+        },
+      });
+
+      const data = await res.json();
+      setValue("fullAddress", data.formatted_address, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 
   useEffect(() => {
     if (isScriptLoaded && window.L && !mapInstance) {
@@ -33,12 +51,12 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
         center: [34.642423, 50.880689],
         zoom: 14,
       });
+      
 
       map.on("click", async (e: any) => {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
 
-        setSelectedCoords([lat, lng]);
         setValue("lat", lat, {
           shouldValidate: true,
           shouldDirty: true,
@@ -47,44 +65,24 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
           shouldValidate: true,
           shouldDirty: true,
         });
-        // حذف مارکر قبلی
+
         if (markerRef.current) {
           map.removeLayer(markerRef.current);
         }
 
-        // افزودن مارکر جدید
         const newMarker = window.L.marker([lat, lng]).addTo(map);
         markerRef.current = newMarker;
 
-        // دریافت آدرس
         fetchAddress(lat, lng);
       });
 
       setMapInstance(map);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isScriptLoaded, mapInstance]);
 
-  const fetchAddress = async (lat: number, lng: number) => {
-    console.log(lat, lng);
-    try {
-      const res = await fetch(`https://api.neshan.org/v5/reverse?lat=${lat}&lng=${lng}`, {
-        headers: {
-          "Api-Key": NESHAN_SERVICE_KEY,
-        },
-      });
+    
+  }, [isScriptLoaded,setValue,mapInstance,fetchAddress]);
 
-      if (!res.ok) throw new Error("خطا در دریافت آدرس");
-
-      const data = await res.json();
-      setValue("fullAddress", data.formatted_address, {
-        shouldValidate: true,
-        shouldDirty: true,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
 
   const goToUserLocation = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -105,7 +103,6 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
 
         const userMarker = window.L.marker([latitude, longitude]).addTo(mapInstance);
         markerRef.current = userMarker;
-        setSelectedCoords([latitude, longitude]);
 
         fetchAddress(latitude, longitude); // ← گرفتن آدرس
       }
@@ -120,7 +117,7 @@ export default function Map({ setValue }: { setValue: UseFormSetValue<PatientAdd
       />
       <Script
         src="https://static.neshan.org/sdk/leaflet/v1.9.4/neshan-sdk/v1.0.8/index.js"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
         onLoad={() => setIsScriptLoaded(true)}
       />
 

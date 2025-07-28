@@ -1,6 +1,6 @@
 "use client";
 import SingleAddress from "@/components/SingleAddress";
-import { useAddress, useDeleteAddress } from "@/hooks/useAddress";
+import { useGetAddress, useDeleteAddress } from "@/hooks/useAddress";
 import { GetAddressType } from "@/types/addressTypes";
 import CenterModal from "@/ui/CenterModal";
 import { AddRoundedSvg } from "@/ui/icon";
@@ -13,7 +13,7 @@ export default function AddressList() {
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const { data, isLoading } = useAddress();
+  const { data, isLoading } = useGetAddress();
   const { mutateAsync } = useDeleteAddress();
 
   const deleteHandler = async () => {
@@ -33,13 +33,13 @@ export default function AddressList() {
           <div className="w-full flex items-center gap-4 px-4">
             <button
               onClick={() => deleteHandler()}
-              className="flex-1 border-2 rounded-primary-2 py-1 text-tertiary-400 border-tertiary-400"
+              className="flex-1 border-2 rounded-primary-2 py-1 text-tertiary-300 border-tertiary-300"
             >
               بلی
             </button>
             <button
               onClick={() => setIsOpen(false)}
-              className="flex-1 border-2 rounded-primary-2 py-1 text-secondary-400 border-secondary-400"
+              className="flex-1 border-2 rounded-primary-2 py-1 text-neutral-400"
             >
               خیر
             </button>

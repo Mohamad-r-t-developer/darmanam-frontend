@@ -17,7 +17,7 @@ app.interceptors.response.use(
     if (err.response.status == 401 && !originalConfig._retry) {
       originalConfig._retry = true;
       try {
-        const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh-token`, {
           withCredentials: true,
         });
         console.log(data)
